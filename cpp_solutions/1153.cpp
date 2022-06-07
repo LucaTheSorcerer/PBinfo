@@ -1,38 +1,32 @@
 #include <iostream>
 using namespace std;
 
-int n, i ,v[1001];
-
-int nr(int n)
+int nrCifre(int n)
 {
-    int k = 0;
-    while(n!=0)
-        k++, n/=10;
-    return k;
+    int cif = 0;
+    do
+    {
+        cif++, n /= 10;
+    } while(n);
+    return cif;
 }
 
-int subp(int ls, int ld)
+int toateNrCifrePare(int v[], int st, int dr)
 {
-    int mij, ss, sd;
-    if(ls==ld)
-        if(nr(v[ls])%2==0) return 1;
+    if(st == dr)
+        if(nrCifre(v[st]) % 2 ==0)
+            return 1;
         else return 0;
-    else
-    {
-        mij = (ls+ld)/2;
-        ss = subp(ls, mij);
-        sd = subp(mij+1, ld);
-    }
-    return ss+sd;
+
+    else return toateNrCifrePare(v, st, (st+dr)/2) && toateNrCifrePare(v, (st+dr)/2+1, dr);
 }
 
 int main()
 {
+    int n, v[101], i;
     cin >> n;
-    for(i = 1; i <= n; i++) cin >> v[i];
-    if(subp(1,n)==n)
-        cout << "DA";
-    else
-        cout << "NU";
-    return 0;
+    for(i = 1; i <= n; i++)
+        cin >> v[i];
+
+    cout << (toateNrCifrePare(v, 1, n) ? "DA" : "NU");
 }

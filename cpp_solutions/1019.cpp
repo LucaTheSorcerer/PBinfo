@@ -1,20 +1,22 @@
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
-int prim(int n);
+
+int Maxim(int v[], int st, int dr)
+{
+    if(st == dr) return max(v[st], v[dr]);
+
+    int m = (st + dr)/2;
+    return max(Maxim(v, st, m), Maxim(v, m + 1, dr));
+}
 
 int main()
 {
-    int n, maxim = 0, tmp;
+    int n, i = 0;
     cin >> n;
-    int i;
+    int v[n];
     for(i = 1; i <= n; i++)
-    {
-        cin >> tmp;
-            if(tmp > maxim)
-                maxim = tmp;
-    }
-    cout << maxim;
+        cin >> v[i];
+
+    cout << Maxim(v, 1, n);
     return 0;
 }
-
-

@@ -1,13 +1,16 @@
 #include <iostream>
 using namespace std;
 
-int n;
-long long int suma = 0;
+long long int n;
+
+long long sum(int n)
+{
+    if(n == 0) return 0;
+    return n + 2 * sum(n-1);
+}
 
 int main()
 {
     cin >> n;
-    for(int i = 1; i <= n; ++i)
-        suma = suma * 2 + i;
-    	cout << suma;
+    cout << sum(n);
 }

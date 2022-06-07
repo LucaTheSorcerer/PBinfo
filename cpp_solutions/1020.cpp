@@ -1,35 +1,37 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <cmath>
 using namespace std;
-int prim(int n);
-
-int main()
-{
-    int n, maxim = 0, tmp;
-    cin >> n;
-    int i;
-    for(i = 1; i <= n; i++)
-    {
-        cin >> tmp;
-        if(prim(tmp))
-        {
-            if(tmp > maxim)
-                maxim = tmp;
-        }
-    }
-    cout << maxim;
-    return 0;
-}
 
 int prim(int n)
 {
-    int cnt = 0, i;
-    for(i = 1; i * i <= n; i++)
+    int d;
+    if(n == 1 || n == 0) return 0;
+    for(d = 2; d * d <= n; d++)
+        if(n%d == 0) return 0;
+    return 1;
+}
+
+int MaxPrim(int v[], int st, int dr)
+{
+    if(st == dr)
     {
-        if(n%i==0)
-            cnt += 2;
+        if(prim(v[st])) return v[st];
+        else return 0;
     }
-    if(cnt==2)
-        return 1;
-    else
-        return 0;
+    
+    int m = (st + dr)/2;
+    return max(MaxPrim(v, st, m), MaxPrim(v, m+1, dr));
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    int v[n], i;
+
+    for(i = 0; i < n; i++)
+        cin >> v[i];
+
+    cout << MaxPrim(v, 0, n-1);
+    return 0;
 }
